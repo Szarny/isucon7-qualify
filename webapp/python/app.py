@@ -129,12 +129,18 @@ def get_channel_list_info(focus_channel_id=None):
     return channels, description
 
 
+def get_channel_description(focus_channel_id=None):
+    cur = dbh().cursor()
+    cur.execute("SELECT description FROM channel WHERE id = {}".format(focus_channel_id))
+    return cur.fetchone()
+
+
 @app.route('/channel/<int:channel_id>')
 @login_required
 def get_channel(channel_id):
-    channels, description = get_channel_list_info(channel_id)
-    return flask.render_template('channel.html',
-                                 channels=channels, channel_id=channel_id, description=description)
+    description = get_channel_description(channel_id)
+
+    return flask.render_template('channel.html', description=description)
 
 
 @app.route('/register')

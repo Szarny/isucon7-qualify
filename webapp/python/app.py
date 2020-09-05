@@ -132,7 +132,7 @@ def get_channel_list_info(focus_channel_id=None):
 def get_channel_description(focus_channel_id=None):
     cur = dbh().cursor()
     cur.execute("SELECT description FROM channel WHERE id = {}".format(focus_channel_id))
-    return cur.fetchone()
+    return cur.fetchone()['description']
 
 
 @app.route('/channel/<int:channel_id>')
